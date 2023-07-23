@@ -1,0 +1,3 @@
+[general_items]
+external_diff_display=meld %1 %2
+use_external_diff=true

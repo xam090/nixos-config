@@ -1,0 +1,39 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7052ed6..5bfd6f4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -32,7 +32,7 @@ else()
+     set(SCRIPT_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib/cfs-zen-tweaks")
+ endif()
+ 
+-install(FILES set-cfs-zen-tweaks.sh
++install(FILES set-cfs-zen-tweaks.bash
+         DESTINATION "${SCRIPT_INSTALL_DIR}/"
+         PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ WORLD_EXECUTE
+ )
+diff --git a/set-cfs-tweaks.service.in b/set-cfs-tweaks.service.in
+index b49392b..c0e92af 100644
+--- a/set-cfs-tweaks.service.in
++++ b/set-cfs-tweaks.service.in
+@@ -18,7 +18,7 @@ Description=Set CFS tweaks
+ After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+ 
+ [Service]
+-ExecStart=@SCRIPT_INSTALL_DIR@/set-cfs-zen-tweaks.sh
++ExecStart=@SCRIPT_INSTALL_DIR@/set-cfs-zen-tweaks.bash
+ Type=oneshot
+ 
+ [Install]
+diff --git a/set-cfs-zen-tweaks.sh b/set-cfs-zen-tweaks.sh
+index 2f8b7d3..e88f47f 100755
+--- a/set-cfs-zen-tweaks.sh
++++ b/set-cfs-zen-tweaks.sh
+@@ -35,7 +35,7 @@ call_gawk() {
+   printf '%s' "$(gawk 'BEGIN {print '"${1}"'}')"
+ }
+ 
+-NPROC="$(nproc)"
++NPROC="24"
+ # Linux uses this algorithm to multiply miliseconds
+ MODIFIER="$( call_gawk "10 ** 6 * (1 + int(log(${NPROC}) / log(2)))" )"
+ 
